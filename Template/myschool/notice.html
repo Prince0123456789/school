@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice</title>
+        <!-- Favicon -->
+        <link href="{% static 'myschool/img/favicon.ico' %}" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap" rel="stylesheet">
+    
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    
+        <!-- Flaticon Font -->
+        <link href="{% static 'myschool/lib/flaticon/font/flaticon.css' %}" rel="stylesheet">
+    
+        <!-- Libraries Stylesheet -->
+        <link href="{% static 'myschool/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+        <link href="{% static 'myschool/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+    
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'myschool/css/style.css' %}" rel="stylesheet">
+    
+         <style>
+        .dropbtn {
+          background-color: #04AA6D;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+          border: none;
+        }
+        
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          max-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+        
+        .dropdown-content a:hover {background-color: #ddd;}
+        
+        .dropdown:hover .dropdown-content {display: block;}
+        
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+        </style>
+        
+    </head>
+    
+    <body>
+    
+    
+    {{read}}
+        <!-- Navbar Start -->
+        <div class="container-fluid bg-light position-relative shadow">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
+                    <i class="flaticon-043-teddy-bear"></i>
+                    <span class="text-primary">KidKinder</span>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav font-weight-bold mx-auto py-0">
+                        <a href="#" class="nav-item nav-link active">Home</a>
+                        <a href="about" class="nav-item nav-link">About</a>
+                        <a href="class" class="nav-item nav-link">Classes</a>                     
+                        <a href="contact" class="nav-item nav-link">Contact</a>
+                        {{err}}
+                        
+    
+    
+                        {%if principal %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Go To</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_add_teacher">Add Teacher</button>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_add_student">Add Student</button>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_remove_teacher">Remove Teacher</button>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_remove_student">Remove Student</button>
+                                <a href="notice" ><button type="button" class="btn">Notice</button></a>
+                              </div>
+                        </div>
+                        <div class="container">
+                            <div class="dropdown">
+                                <button class="dropbtn">{{principal.pname|upper}}</button>
+                                <div class="dropdown-content">
+                                  <a href="logout">Logout</a>
+                                  <a href="edit">Edit Profile</a>
+                                </div>
+                               
+                        </div>
+                        </div>
+    
+    
+    
+                         <!--Add teacher-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_add_teacher" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="add_teacher" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                      
+    
+                                        <div>
+                                        <label for="name"> Name: </label>
+                                        <input type="text" name="name" placeholder="Enter teacher name" required>
+                                        </div>
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                          <div>
+                                          <label for="password">Password: </label>
+                                          <input type="text" name="password" placeholder="password" required>
+                                          </div>
+                                          <div>
+                                            <label for="mob"> Mobile No.: </label>
+                                            <input type="text" name="mob" placeholder="Ex:-1234567894" required>
+                                            </div>
+                                          <div>
+                                              <label for="gender">Gender: </label>
+                                            <select name="gender">
+                                                <option value="male" selected>Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            </div>
+                                            <div>
+                                            <label for="age">Age: </label>
+                                            <input type="number" name="age" placeholder="ex:- 24">
+                                            </div>
+                                            <div>
+                                                <label for="dob">DOB: </label>
+                                                <input type="date" name="dob" placeholder="dd/mm/yyyy">
+                                                </div>
+                                            <div>
+                                                <label for="subject">Subject: </label>
+                                                <input type="text" name="subject" placeholder="ex:-math">
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Add</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+    
+                            <!--Add Student-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_add_student" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="add_student" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div>
+                                        <label for="name"> Name: </label>
+                                        <input type="text" name="name" placeholder="Ex- John Doe" required>
+                                        </div>
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                          <div>
+                                          <label for="password"> Password: </label>
+                                          <input type="text" name="password" placeholder="password" required>
+                                          </div>
+                                          <div>
+                                            <label for="name"> Mobile No.: </label>
+                                            <input type="number" name="mob" placeholder="Ex- John Doe" required>
+                                            </div>
+                                          <div>
+                                              <label for="gender">Gender: </label>
+                                            <select name="gender">
+                                                <option value="male" selected>Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            </div>
+                                            <div>
+                                            <label for="age">Age: </label>
+                                            <input type="number" name="age" placeholder="Ex:- 24">
+                                            </div>
+                                            <div>
+                                                <label for="dob">DOB: </label>
+                                                <input type="date" name="dob" placeholder="dd/mm/yyyy">
+                                                </div>
+                                            <div>
+                                                <label for="subject">Class: </label>
+                                                <select name="class" >
+                                                    <option value="1" selected>1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Add</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+                               <!--Remove Teacher-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_remove_teacher" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="remove_teacher" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                      
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                         
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Remove</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+                              <!--Remove Student-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_remove_student" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="remove_student" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                      
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                         
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Remove</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <a href="" class="btn btn-info btn-lg">Create Class</a>
+                              <a href="" class="btn btn-info btn-lg">Join Class</a>
+    
+    
+                        {%elif teacher %}
+    
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Go To</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_add_student">Add Student</button>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#myModal_remove_student">Remove Student</button>
+                                <a href="notice" ><button type="button" class="btn">Notice</button></a>
+                              </div>
+                        </div>
+    
+                        <div class="container">
+                            <div class="dropdown">
+                                <button class="dropbtn">{{teacher.tname|upper}}</button>
+                                <div class="dropdown-content">
+                                  <a href="logout">Logout</a>
+                                  <a href="edit">Edit Profile</a>
+                                </div>
+                               
+    
+                            <!--Add Student-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_add_student" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="add_student" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                          <div>
+                                          <label for="name"> Name: </label>
+                                          <input type="text" name="name" placeholder="name" required>
+                                          </div>
+                                          <div>
+                                          <label for="username"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                          <div>
+                                          <label for="password"> Password: </label>
+                                          <input type="text" name="password" placeholder="password" required>
+                                          </div>
+                                          <div>
+                                              <label for="gender">Gender: </label>
+                                            <select name="gender">
+                                                <option value="male" selected>Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            </div>
+                                            <div>
+                                            <label for="age">Age: </label>
+                                            <input type="number" name="age" placeholder="ex:- 24">
+                                            </div>
+                                            <div>
+                                                <label for="age">Mobile No.: </label>
+                                                <input type="number" name="mob" placeholder="ex:- 1234567890">
+                                                </div>
+                                            <div>
+                                                <label for="dob">DOB: </label>
+                                                <input type="date" name="dob" placeholder="dd/mm/yyyy">
+                                            </div>
+                                            <div>
+                                                <label for="subject">Class: </label>
+                                                <select name="class" >
+                                                    <option value="1" selected>1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Add</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+    
+                              <!--Remove Student-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_remove_student" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="remove_student" method="post">
+                                      {% csrf_token %}
+                                    <div class="modal-body">
+                                      
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="username" required>
+                                          </div>
+                                         
+                                    </div>
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-default">Remove</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+    
+    
+                        </div>
+                        </div>
+                        <a href="" class="btn btn-info btn-lg">Create Class</a>
+                    <a href="" class="btn btn-info btn-lg">Join Class</a>
+    
+                       {% elif student%}
+                       <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Go To</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            
+                            <a href="notice" ><button type="button" class="btn">Notice</button></a>
+                        </div>
+                    </div>
+                       <div class="container">
+                        <div class="dropdown">
+                            <button class="dropbtn">{{student.sname|upper}}</button>
+                            <div class="dropdown-content">
+                              <a href="logout">Logout</a>
+                              <a href="edit">Edit Profile</a>
+                            </div>
+                       <a href="" class="btn btn-info btn-lg">Join Class</a>
+                             {%else%}
+                            <!-- Trigger the modal with a button -->
+                            <div class="container">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-info btn-lg">Login</button>
+                                    <div class="dropdown-content">
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#myModal_principal">Principal</button>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#myModal_teacher">Teacher</button>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#myModal_student">Student</button>
+                                    </div>
+                                  </div>
+                            </div>
+    
+    
+    
+                            <!--Principal-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_principal" role="dialog">
+                              <div class="modal-dialog">
+                              
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                                  <form action="login_principal" method="post">
+                                    {% csrf_token %}
+                                  <div class="modal-body">
+                                    
+                                        <div>
+                                        <label for="name"> Username: </label>
+                                        <input type="text" name="username" placeholder="username" required>
+                                        </div>
+                                        <div>
+                                        <label for="name"> Password: </label>
+                                        <input type="text" name="password" placeholder="password" required>
+                                        </div>
+    
+                                   
+                                  </div>
+                                  <div class="modal-footer">
+                                   <button type="submit" class="btn btn-default">Login</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+                                  </form>
+                                </div>
+                                
+                              </div>
+                            </div>
+    
+    
+    
+    
+                             <!--Teacher-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_teacher" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="login_teacher" method="post">
+                                      {%csrf_token%}
+                                    <div class="modal-body">
+                                      
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="Username" required>
+                                          </div>
+                                          <div>
+                                          <label for="name"> Password: </label>
+                                          <input type="text" name="password" placeholder="Password" required>
+                                          </div>
+      
+                                     
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-default">Login</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+    
+    
+                              <!--Student-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_student" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <form action="login_student" method="post">
+                                      {%csrf_token%}
+                                    <div class="modal-body">
+                                      
+                                          <div>
+                                          <label for="name"> Username: </label>
+                                          <input type="text" name="username" placeholder="Username" required>
+                                          </div>
+                                          <div>
+                                          <label for="name"> Password: </label>
+                                          <input type="text" name="password" placeholder="Password" required>
+                                          </div>
+      
+                                     
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-default">Login</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+    
+    
+    
+                            {%endif%}
+                    </div>
+                    
+                </div>
+            </nav>
+        </div><br><br>
+        <!-- Navbar End -->
+        <h2 style="color: purple;" align="center">Notice</h2><br><br>
+        <!--Notice-Start-->
+        <table align="center">
+          
+        {%for i in notice%}
+          <tr>
+            <td width="300px"><u>{{i.title}}</u></td>
+            <td><a href="#" style="color:red;">Click Here</a></td>
+          </tr>
+        {%endfor%}
+        <tr align="center">
+          <td>
+           {%if principal%}
+           <a href="add_notice" > <button class="btn btn-info btn-lg">Add Notice</button></a>
+            {%elif teacher%}
+            <a href="add_notice"><button class="btn btn-info btn-lg">Add Notice</button></a>
+            {%endif%}
+          </td>
+        </tr>
+        </table>
+       
+        <!--Notice-Start -->
+        {%if username%}
+        <h2 style="color: red;">Notice</h2>
+        {%endif%}
+
+        <!--Notice-End-->
+        <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5">
+      <div class="row pt-5">
+          <div class="col-lg-3 col-md-6 mb-5">
+              <a href="" class="navbar-brand font-weight-bold text-primary m-0 mb-4 p-0" style="font-size: 40px; line-height: 40px;">
+                  <i class="flaticon-043-teddy-bear"></i>
+                  <span class="text-white">KidKinder</span>
+              </a>
+              <p>Labore dolor amet ipsum ea, erat sit ipsum duo eos. Volup amet ea dolor et magna dolor, elitr rebum duo est sed diam elitr. Stet elitr stet diam duo eos rebum ipsum diam ipsum elitr.</p>
+              <div class="d-flex justify-content-start mt-4">
+                  <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+                      style="width: 38px; height: 38px;" href="#"><i class="fab fa-twitter"></i></a>
+                  <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+                      style="width: 38px; height: 38px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+                      style="width: 38px; height: 38px;" href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+                      style="width: 38px; height: 38px;" href="#"><i class="fab fa-instagram"></i></a>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-5">
+              <h3 class="text-primary mb-4">Get In Touch</h3>
+              <div class="d-flex">
+                  <h4 class="fa fa-map-marker-alt text-primary"></h4>
+                  <div class="pl-3">
+                      <h5 class="text-white">Address</h5>
+                      <p>Chniya Road, Garhwa</p>
+                  </div>
+              </div>
+              <div class="d-flex">
+                  <h4 class="fa fa-envelope text-primary"></h4>
+                  <div class="pl-3">
+                      <h5 class="text-white">Email</h5>
+                      <p>princechaubey554@gmail.com</p>
+                  </div>
+              </div>
+              <div class="d-flex">
+                  <h4 class="fa fa-phone-alt text-primary"></h4>
+                  <div class="pl-3">
+                      <h5 class="text-white">Phone</h5>
+                      <p>+91 12 345 67890</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-5">
+              <h3 class="text-primary mb-4">Quick Links</h3>
+              <div class="d-flex flex-column justify-content-start">
+                <a class="text-white mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                <a class="text-white mb-2" href="about"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                <a class="text-white mb-2" href="class"><i class="fa fa-angle-right mr-2"></i>Our Classes</a>
+                <a class="text-white" href="contact"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-5">
+              <h3 class="text-primary mb-4">Newsletter</h3>
+              <form action="">
+                  <div class="form-group">
+                      <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
+                  </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
+                          required="required" />
+                  </div>
+                  <div>
+                      <button class="btn btn-primary btn-block border-0 py-3" type="submit">Submit Now</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div class="container-fluid pt-5" style="border-top: 1px solid rgba(23, 162, 184, .2);;">
+          <p class="m-0 text-center text-white">
+              &copy; <a class="text-primary font-weight-bold" href="#">Prince</a>. All Rights Reserved.
+          </p>
+      </div>
+  </div>
+  <!-- Footer End -->
+
+
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'myschool/lib/easing/easing.min.js' %}"></script>
+  <script src="{% static 'myschool/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'myschool/lib/isotope/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'myschool/lib/lightbox/js/lightbox.min.js' %}"></script>
+
+  <!-- Contact Javascript File -->
+  <script src="{% static 'myschool/mail/jqBootstrapValidation.min.js' %}"></script>
+  <script src="{% static 'myschool/mail/contact.js' %}"></script>
+
+  <!-- Template Javascript -->
+  <script src="{% static 'myschool/js/main.js' %}"></script>
+
+
+</body>
+</html>
