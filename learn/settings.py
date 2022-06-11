@@ -25,9 +25,9 @@ STATIC_DIR=os.path.join(BASE_DIR, 'Static')
 SECRET_KEY = 'django-insecure-t_ti#$kirlv*j=+6pu=kkvd^96blh4xg=)%eo^=782n@t0ouw4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','school02.herokuapp.com']
 
 
 # Application definition
